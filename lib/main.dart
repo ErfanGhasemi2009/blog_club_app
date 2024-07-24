@@ -1,5 +1,6 @@
 import 'package:blog_club_app/carousel/carousel_slider.dart';
 import 'package:blog_club_app/data.dart';
+import 'package:blog_club_app/gen/assets.gen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,11 +106,7 @@ class HomeState extends StatelessWidget {
                       'Hi, Jonathan!',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    Image.asset(
-                      "assets/img/icons/notification.png",
-                      width: 32,
-                      height: 32,
-                    )
+                    Assets.img.icons.notification.image(width: 32, height: 32),
                   ],
                 ),
               ),
