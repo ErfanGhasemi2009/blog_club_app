@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
         textTheme: const TextTheme(
             bodyMedium: TextStyle(
-                color: secondryTextColor,
-                fontFamily: fontFamilyDefualt,
+                color: secondryTextColor, 
+                fontFamily: fontFamilyDefualt,                 
                 fontSize: 14),
             titleSmall: TextStyle(
                 fontFamily: fontFamilyDefualt,

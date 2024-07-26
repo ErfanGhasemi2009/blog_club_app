@@ -1,6 +1,6 @@
+import 'package:blog_club_app/auth.dart';
 import 'package:blog_club_app/data.dart';
 import 'package:blog_club_app/gen/assets.gen.dart';
-import 'package:blog_club_app/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -103,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const HomeState()));
+                                              const AuthScreen()));
                                 }else{
                                   _pageController.animateToPage(page+1, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                                 }
