@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   static const String fontFamilyDefualt = "Avenir";
   static const Color primaryTextColor = Color(0xff0D253C);
   static const Color secondryTextColor = Color(0xff2D4379);
-  static const Color textButtonTextColor = Color(0xff376AED);
+  static const Color primaryColor = Color(0xff376AED);
 
   const MyApp({super.key});
 
@@ -24,20 +24,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Blog Club',
       theme: ThemeData(
         textButtonTheme: const TextButtonThemeData(
             style: ButtonStyle(
                 textStyle: WidgetStatePropertyAll(
           TextStyle(
               fontFamily: fontFamilyDefualt,
-              color: textButtonTextColor,
+              color: primaryColor,
               fontWeight: FontWeight.w400,
               fontSize: 14),
         ))),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        colorScheme: const ColorScheme.light(
+          primary: primaryColor,
+          onPrimary: Colors.white,
+          background: Color(0xffFbFCFF),
+          surface: Colors.white,
+          onSurface: primaryTextColor,
+          onBackground: primaryTextColor,
+        ),
+        useMaterial3: false,
         textTheme: const TextTheme(
+            bodyMedium: TextStyle(
+                color: secondryTextColor,
+                fontFamily: fontFamilyDefualt,
+                fontSize: 14),
             titleSmall: TextStyle(
                 fontFamily: fontFamilyDefualt,
                 color: secondryTextColor,
@@ -137,7 +148,7 @@ class _BottomNavigation extends StatelessWidget {
                 width: 65,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(32.5),
-                    color: MyApp.textButtonTextColor,
+                    color: MyApp.primaryColor,
                     border: Border.all(color: Colors.white, width: 4)),
                 child: Image.asset('assets/img/icons/plus.png'),
               ),

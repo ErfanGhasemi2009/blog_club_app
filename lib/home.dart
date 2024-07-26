@@ -277,7 +277,7 @@ class _PostList extends StatelessWidget {
                 style: TextButtonTheme.of(context).style,
                 onPressed: () {},
                 child: const Text('More',
-                    style: TextStyle(color: MyApp.textButtonTextColor)),
+                    style: TextStyle(color: MyApp.primaryColor)),
               ),
             ],
           ),
@@ -332,7 +332,7 @@ class _Post extends StatelessWidget {
                     post.caption,
                     style: const TextStyle(
                         fontFamily: MyApp.fontFamilyDefualt,
-                        color: MyApp.textButtonTextColor,
+                        color: MyApp.primaryColor,
                         fontWeight: FontWeight.w700,
                         fontSize: 14),
                   ),
