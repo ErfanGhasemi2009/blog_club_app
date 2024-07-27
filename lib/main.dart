@@ -1,3 +1,4 @@
+import 'package:blog_club_app/article.dart';
 import 'package:blog_club_app/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +44,19 @@ class MyApp extends StatelessWidget {
           onSurface: primaryTextColor,
           onBackground: primaryTextColor,
         ),
+        appBarTheme: AppBarTheme(
+            color: Theme.of(context).colorScheme.surface,
+            titleSpacing: 32,
+            foregroundColor: Theme.of(context).colorScheme.onBackground),
+            snackBarTheme: const SnackBarThemeData(
+              backgroundColor: primaryColor,
+            ),
         useMaterial3: false,
         textTheme: const TextTheme(
+          
             bodyMedium: TextStyle(
-                color: secondryTextColor, 
-                fontFamily: fontFamilyDefualt,                 
+                color: secondryTextColor,
+                fontFamily: fontFamilyDefualt,
                 fontSize: 14),
             titleSmall: TextStyle(
                 fontFamily: fontFamilyDefualt,
@@ -88,7 +97,7 @@ class MyApp extends StatelessWidget {
       //   const Positioned.fill(child: HomeState()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation())
       // ]),
-      home: const SplashScreen(),
+      home: const ArticleScreen(),
     );
   }
 }

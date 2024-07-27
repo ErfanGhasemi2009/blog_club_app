@@ -35,12 +35,16 @@ class $AssetsImgBackgroundGen {
   AssetGenImage get onboarding =>
       const AssetGenImage('assets/img/background/onboarding.png');
 
+  /// File path: assets/img/background/single_post.png
+  AssetGenImage get singlePost =>
+      const AssetGenImage('assets/img/background/single_post.png');
+
   /// File path: assets/img/background/splash.png
   AssetGenImage get splash =>
       const AssetGenImage('assets/img/background/splash.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [onboarding, splash];
+  List<AssetGenImage> get values => [onboarding, singlePost, splash];
 }
 
 class $AssetsImgIconsGen {
@@ -70,6 +74,9 @@ class $AssetsImgIconsGen {
   /// File path: assets/img/icons/Search.png
   AssetGenImage get search =>
       const AssetGenImage('assets/img/icons/Search.png');
+
+  /// File path: assets/img/icons/Thumbs.svg
+  SvgGenImage get thumbs => const SvgGenImage('assets/img/icons/Thumbs.svg');
 
   /// File path: assets/img/icons/Twitter.png
   AssetGenImage get twitter =>
@@ -107,6 +114,7 @@ class $AssetsImgIconsGen {
         logo,
         menu,
         search,
+        thumbs,
         twitter,
         category1,
         category2,
