@@ -1,4 +1,6 @@
 import 'package:blog_club_app/article.dart';
+import 'package:blog_club_app/home.dart';
+import 'package:blog_club_app/profileScreen.dart';
 import 'package:blog_club_app/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +55,12 @@ class MyApp extends StatelessWidget {
             ),
         useMaterial3: false,
         textTheme: const TextTheme(
+          bodyLarge: TextStyle(
+            fontFamily: fontFamilyDefualt,
+                color: secondryTextColor,
+                fontWeight: FontWeight.w700,
+                fontSize: 18
+          ),
           
             bodyMedium: TextStyle(
                 color: secondryTextColor,
@@ -97,7 +105,7 @@ class MyApp extends StatelessWidget {
       //   const Positioned.fill(child: HomeState()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation())
       // ]),
-      home: const ArticleScreen(),
+      home: const ProfileScreen(),
     );
   }
 }

@@ -44,7 +44,25 @@ class HomeState extends StatelessWidget {
                 height: 16,
               ),
               const _CategoryList(),
-              const _PostList(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(32, 0, 16, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Lastest News',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    TextButton(
+                      style: TextButtonTheme.of(context).style,
+                      onPressed: () {},
+                      child: const Text('More',
+                          style: TextStyle(color: MyApp.primaryColor)),
+                    ),
+                  ],
+                ),
+              ),
+              const PostList(),
               const SizedBox(
                 height: 32,
               )
@@ -255,8 +273,8 @@ class _Story extends StatelessWidget {
   }
 }
 
-class _PostList extends StatelessWidget {
-  const _PostList({
+class PostList extends StatelessWidget {
+  const PostList({
     super.key,
   });
   @override
@@ -264,27 +282,9 @@ class _PostList extends StatelessWidget {
     final postList = AppDatabase.posts;
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(32, 0, 16, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Lastest News',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              TextButton(
-                style: TextButtonTheme.of(context).style,
-                onPressed: () {},
-                child: const Text('More',
-                    style: TextStyle(color: MyApp.primaryColor)),
-              ),
-            ],
-          ),
-        ),
         ListView.builder(
           itemBuilder: (context, index) {
-            return _Post(
+            return Post(
               post: postList[index],
             );
           },
@@ -298,9 +298,9 @@ class _PostList extends StatelessWidget {
   }
 }
 
-class _Post extends StatelessWidget {
+class Post extends StatelessWidget {
   final PostData post;
-  const _Post({
+  const Post({
     super.key,
     required this.post,
   });
