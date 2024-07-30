@@ -1,6 +1,7 @@
 import 'package:blog_club_app/article.dart';
 import 'package:blog_club_app/home.dart';
 import 'package:blog_club_app/profileScreen.dart';
+import 'package:blog_club_app/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,7 +103,7 @@ class MyApp extends StatelessWidget {
       //   const Positioned.fill(child: HomeState()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation())
       // ]),
-      home: const MainScreen(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -118,40 +119,99 @@ const int homeScreenIndex = 0;
 const int articleScreenIndex = 1;
 const int searchScreenIndex = 2;
 const int menuScreenIndex = 3;
+List<int> _historyList = [];
 
 class _MainScreenState extends State<MainScreen> {
   int selectedScreenIndex = homeScreenIndex;
+
+  final GlobalKey<NavigatorState> _homekey = GlobalKey();
+  final GlobalKey<NavigatorState> _articlekey = GlobalKey();
+  final GlobalKey<NavigatorState> _searchkey = GlobalKey();
+  final GlobalKey<NavigatorState> _menukey = GlobalKey();
+
+  late final map = {
+    homeScreenIndex: _homekey,
+    articleScreenIndex: _articlekey,
+    searchScreenIndex: _searchkey,
+    menuScreenIndex: _menukey,
+  };
+  Future<bool> _onWillPopFunc() async {
+    final NavigatorState currentSelectedNavigatorIndex =
+        map[selectedScreenIndex]!.currentState!;
+
+    if (currentSelectedNavigatorIndex.canPop()) {
+      currentSelectedNavigatorIndex.pop();
+      return false;
+    } else if (_historyList.isNotEmpty) {
+      setState(() {
+        selectedScreenIndex = _historyList.last;
+        _historyList.removeLast();
+      });
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            bottom: 65,
-            child: IndexedStack(
-              index: selectedScreenIndex,
-              children: const [
-                HomeState(),
-                ArticleScreen(),
-                SearchScreen(),
-                ProfileScreen()
-              ],
+    return WillPopScope(
+      onWillPop: _onWillPopFunc,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned.fill(
+              bottom: 65,
+              child: IndexedStack(
+                index: selectedScreenIndex,
+                children: [
+                  Navigator(
+                    key: _homekey,
+                    onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => Offstage(
+                            offstage: selectedScreenIndex != homeScreenIndex,
+                            child: const HomeState())),
+                  ),
+                  Navigator(
+                    key: _articlekey,
+                    onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => Offstage(
+                            offstage: selectedScreenIndex != articleScreenIndex,
+                            child: const ArticleScreen())),
+                  ),
+                  Navigator(
+                    key: _searchkey,
+                    onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => Offstage(
+                            offstage: selectedScreenIndex != searchScreenIndex,
+                            child: const SearchScreen())),
+                  ),
+                  Navigator(
+                    key: _menukey,
+                    onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => Offstage(
+                            offstage: selectedScreenIndex != searchScreenIndex,
+                            child: const ProfileScreen())),
+                  ),
+                ],
+              ),
             ),
-          ),
-           Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-             child: _BottomNavigation(
-                     onSelectedTab: (index) {
-                       setState(() {
-              selectedScreenIndex = index;
-                       });
-                     },
-                     selectedTab: selectedScreenIndex,
-                   ),
-           ),
-        ],
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: _BottomNavigation(
+                onSelectedTab: (index) {
+                  setState(() {
+                    _historyList.remove(selectedScreenIndex);
+                    _historyList.add(selectedScreenIndex);
+                    selectedScreenIndex = index;
+                  });
+                },
+                selectedTab: selectedScreenIndex,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

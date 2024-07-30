@@ -1,4 +1,5 @@
 import 'package:blog_club_app/gen/assets.gen.dart';
+import 'package:blog_club_app/main.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -83,7 +84,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(32, 48, 32, 32),
-                        child: selectedTab == loginTab ? _Login(themeData: themeData): _SingUp(themeData: themeData),
+                        child: selectedTab == loginTab
+                            ? _Login(themeData: themeData)
+                            : _SingUp(themeData: themeData),
                       ),
                     ),
                   ),
@@ -127,9 +130,7 @@ class _Login extends StatelessWidget {
         const TextField(
           decoration: InputDecoration(label: Text('Username')),
         ),
-        
         _PasswordTextField(themeData: themeData),
-        
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 32, 0, 16),
           child: ElevatedButton(
@@ -140,7 +141,10 @@ class _Login extends StatelessWidget {
                 shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24))),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const MainScreen()));
+              },
               child: Text('login'.toUpperCase())),
         ),
         Padding(
@@ -233,7 +237,6 @@ class _SingUp extends StatelessWidget {
           height: 8,
         ),
         _PasswordTextField(themeData: themeData),
-        
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 32, 0, 16),
           child: ElevatedButton(
@@ -244,7 +247,10 @@ class _SingUp extends StatelessWidget {
                 shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24))),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const MainScreen()));
+              },
               child: Text('sign up'.toUpperCase())),
         ),
         Column(
