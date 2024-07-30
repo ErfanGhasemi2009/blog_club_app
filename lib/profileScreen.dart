@@ -1,4 +1,3 @@
-import 'package:blog_club_app/data.dart';
 import 'package:blog_club_app/gen/assets.gen.dart';
 import 'package:blog_club_app/home.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final posts = AppDatabase.posts;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

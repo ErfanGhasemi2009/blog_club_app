@@ -43,6 +43,7 @@ class ArticleScreen extends StatelessWidget {
       ),
       body: Stack(children: [
         CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(title: const Text('Article'), actions: [
               IconButton(
@@ -152,7 +153,7 @@ class ArticleScreen extends StatelessWidget {
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
               colors: [
-                themeData.colorScheme.surface,
+                themeData.colorScheme.surface.withOpacity(0.6),
                 themeData.colorScheme.surface.withOpacity(0)
               ],
             )),

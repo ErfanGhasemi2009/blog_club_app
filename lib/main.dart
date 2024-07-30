@@ -1,7 +1,6 @@
 import 'package:blog_club_app/article.dart';
 import 'package:blog_club_app/home.dart';
 import 'package:blog_club_app/profileScreen.dart';
-import 'package:blog_club_app/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,18 +49,16 @@ class MyApp extends StatelessWidget {
             color: Theme.of(context).colorScheme.surface,
             titleSpacing: 32,
             foregroundColor: Theme.of(context).colorScheme.onBackground),
-            snackBarTheme: const SnackBarThemeData(
-              backgroundColor: primaryColor,
-            ),
+        snackBarTheme: const SnackBarThemeData(
+          backgroundColor: primaryColor,
+        ),
         useMaterial3: false,
         textTheme: const TextTheme(
-          bodyLarge: TextStyle(
-            fontFamily: fontFamilyDefualt,
+            bodyLarge: TextStyle(
+                fontFamily: fontFamilyDefualt,
                 color: secondryTextColor,
                 fontWeight: FontWeight.w700,
-                fontSize: 18
-          ),
-          
+                fontSize: 18),
             bodyMedium: TextStyle(
                 color: secondryTextColor,
                 fontFamily: fontFamilyDefualt,
@@ -105,12 +102,79 @@ class MyApp extends StatelessWidget {
       //   const Positioned.fill(child: HomeState()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation())
       // ]),
-      home: const ProfileScreen(),
+      home: const MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+const int homeScreenIndex = 0;
+const int articleScreenIndex = 1;
+const int searchScreenIndex = 2;
+const int menuScreenIndex = 3;
+
+class _MainScreenState extends State<MainScreen> {
+  int selectedScreenIndex = homeScreenIndex;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            bottom: 65,
+            child: IndexedStack(
+              index: selectedScreenIndex,
+              children: const [
+                HomeState(),
+                ArticleScreen(),
+                SearchScreen(),
+                ProfileScreen()
+              ],
+            ),
+          ),
+           Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+             child: _BottomNavigation(
+                     onSelectedTab: (index) {
+                       setState(() {
+              selectedScreenIndex = index;
+                       });
+                     },
+                     selectedTab: selectedScreenIndex,
+                   ),
+           ),
+        ],
+      ),
+    );
+  }
+}
+
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text("Search screen"),
+      ),
     );
   }
 }
 
 class _BottomNavigation extends StatelessWidget {
+  final Function(int index) onSelectedTab;
+  final int selectedTab;
+  const _BottomNavigation(
+      {super.key, required this.onSelectedTab, required this.selectedTab});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -126,31 +190,49 @@ class _BottomNavigation extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     blurRadius: 20,
-                    color: const Color(0xff9b8487).withOpacity(0.3)),
+                    color: const Color(0xff9b8487).withOpacity(0.5)),
               ]),
-              child: const Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _BottomNavigationItem(
-                      iconFileName: 'Home.png',
-                      activeIconFileName: 'Home.png',
-                      title: 'Home'),
-                  _BottomNavigationItem(
-                      iconFileName: 'Articles.png',
-                      activeIconFileName: 'Articles.png',
-                      title: 'Articles'),
-                  SizedBox(
-                    width: 8,
+                    iconFileName: 'Home.png',
+                    activeIconFileName: 'Home.png',
+                    title: 'Home',
+                    isActive: selectedTab == homeScreenIndex,
+                    onTap: () {
+                      onSelectedTab(homeScreenIndex);
+                    },
                   ),
                   _BottomNavigationItem(
-                      iconFileName: 'Search.png',
-                      activeIconFileName: 'Search.png',
-                      title: 'Search'),
+                    iconFileName: 'Articles.png',
+                    activeIconFileName: 'Articles.png',
+                    title: 'Articles',
+                    isActive: selectedTab == articleScreenIndex,
+                    onTap: () {
+                      onSelectedTab(articleScreenIndex);
+                    },
+                  ),
+                  Expanded(child: Container()),
                   _BottomNavigationItem(
-                      iconFileName: 'Menu.png',
-                      activeIconFileName: 'Menu.png',
-                      title: 'Menu'),
+                    iconFileName: 'Search.png',
+                    activeIconFileName: 'Search.png',
+                    title: 'Search',
+                    isActive: selectedTab == searchScreenIndex,
+                    onTap: () {
+                      onSelectedTab(searchScreenIndex);
+                    },
+                  ),
+                  _BottomNavigationItem(
+                    iconFileName: 'Menu.png',
+                    activeIconFileName: 'Menu.png',
+                    title: 'Menu',
+                    isActive: selectedTab == menuScreenIndex,
+                    onTap: () {
+                      onSelectedTab(menuScreenIndex);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -181,25 +263,39 @@ class _BottomNavigationItem extends StatelessWidget {
   final String iconFileName;
   final String activeIconFileName;
   final String title;
+  final Function() onTap;
+  final bool isActive;
 
   const _BottomNavigationItem(
       {required this.iconFileName,
       required this.activeIconFileName,
-      required this.title});
+      required this.title,
+      required this.onTap,
+      required this.isActive});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('assets/img/icons/$iconFileName'),
-        const SizedBox(
-          height: 4,
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/img/icons/$iconFileName'),
+            const SizedBox(
+              height: 4,
+            ),
+            Text(
+              title,
+              style: isActive
+                  ? Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .apply(color: Theme.of(context).colorScheme.primary)
+                  : Theme.of(context).textTheme.displaySmall,
+            )
+          ],
         ),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.displaySmall,
-        )
-      ],
+      ),
     );
   }
 }
